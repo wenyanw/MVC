@@ -1,0 +1,60 @@
+namespace User.models
+{
+    public class RegistrationMgr
+    {
+        public string UserId { get; set; }
+        public string UserLastName { get; set; }
+        public string UserFirstName { get; set; }
+        public string UserDOB { get; set; }
+    }
+}
+
+using FluentValidation;
+using User.models;
+
+namespace User.Validation
+{
+    public class RegistrationMgrValidator : AbstractValidator<RegistrationMgr>
+    {
+        public RegistrationMgrValidator()
+        {
+            RuleFor(x => x.UserId).NotEmpty().WithMessage(" * UserId is required");
+            RuleFor(x => x.UserFirstName).NotEmpty().WithMessage(" * First name is required");
+            RuleFor(x => x.UserLastName).NotEmpty().WithMessage(" * Last name is required");
+        }
+
+    }
+}
+
+      <td>
+                                <input type="text" name="txtZnum" id="txtZnum" value="@ViewBag.Znum"/>
+                                @Html.ValidationMessageFor(model => model.UserId)
+                            </td>
+							
+							
+							
+        [Authorize]
+        [HttpPost]
+        public ActionResult ()
+        {
+            var userMgr = new RegistrationMgr(){ UserId = , UserFirstName = , UserLastName = ,UserDOB = };
+
+            RegistrationMgrValidator validator = new RegistrationMgrValidator();
+            ValidationResult result = validator.Validate(userMgr);
+            if (result.IsValid)
+            {
+
+               //dp someting
+            }
+            else
+            {
+                foreach (ValidationFailure failer in result.Errors)
+                {
+                    ModelState.AddModelError(failer.PropertyName, failer.ErrorMessage);
+                }
+                return View(userMgr);
+            }
+            
+        }
+
+Inspired by http://www.c-sharpcorner.com/UploadFile/3d39b4/Asp-Net-mvc-validation-using-fluent-validation/
